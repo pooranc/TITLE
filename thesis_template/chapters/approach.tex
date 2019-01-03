@@ -122,52 +122,112 @@ achieves a very low training error by learning to be very good at same data that
 
 Another important reason why duplicates need to be removed especially in this research is, the Twitter's functionality of ``re-tweeting". A retweet is just a repost of the tweet of another Twitter user on your own profile. Like hashtags, retweets are a community - driven phenomenon on Twitter that helps to improve the service and make it easier for people to talk. So after searching the tweets with hashtags and filtering only english tweet, duplicate messages tweet is implemented.
 
-This duplicate checker is implemented using a simple idea to sort the text of tweets first and to compare two consecutive texts for similarity. The two consecutive texts shall only be considered similar if they are 80\% similar.
+This duplicate checker is implemented using a simple idea to sort the text of tweets first and to compare two consecutive texts for similarity. The two consecutive texts shall only be considered similar if they are 80\% similar. If the two tweets are similar only tweet is saved and other tweet is discarded. Flowchart of the process in shown in the figure \ref{fig:duplicatechk}. Sorting and similarity check is implemented using the `pandas' python library\footnote{\url{https://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.sort_values.html}} and `difflib' python library \footnote{\url{https://docs.python.org/2/library/difflib.html}}.
 
-\begin{itemize}
-  \item Only ”English” tweets
-  \item Sort the tweets, Check similarity between consecutive tweets
-  \item Merge text and Description fields
-  \item Deleting all non-alphanumeric characters
-  \item Retrieving the location (latitude, longitude)
-\end{itemize}
+\begin{figure}
+	\centering
+	\includegraphics[width=10cm\linewidth,height=10cm]{thesis_template/images/duplicatecheck.png}
+	\caption{Removal of duplicate messages}
+	\label{fig:duplicatechk}
+\end{figure}
 
+\subsubsection{Merge text and Description fields}
+
+One element which made Twitter popular social media network is that it limits your posts to 140 characters(recently characters length is increased to 280). However, this could be disadvantageous for data scientists who try to extract information from the tweet message. Since only 140 characters and people try to shorten the message using acronyms and a lot of unwanted information is also present in a tweet which includes url and users mention. This research therefore combines the text of the tweet message with a user description, which increases the number of characters. User description is another metadata which is present in Twitter JSON structure. In addition, I could just get some more information about user migration by including his/her description. This implement is a simple task, a script just checks whether the user description field has a value if present it is merged with the message.
+
+\subsubsection{Message cleaning}
+In this step, the text in the tweet message is cleaned. The message of the Tweet contains only 140 characters, To this user description is added. But, as mentioned before, This limited size constraints make people to shorten the message using acronyms and wrong spelling. 
+In order to create a purer data set for the classifier training, message cleaning techniques are used. First, all the characters are converted to lowercase. Once it is normalized into single basic structure, several techniques are applied such as remove URL's, remove non-alphanumeric characters. This is implemented using the regular expression, which is a efficient string replacement algorithm. Another actions was performed was removal of the stop words. Stop words are the commonly occuring words(such as "a", "the", "is", "in") because it just adds the number of words and provide less information. also takes processing time. This was done using the NLTK library which is available in python language, it has the stopwords list of for 16 different languages.  
 
 \subsection{Feature engineering}
-As part of feature selection, the following are the features selected
-\begin{itemize}
-  \item ”Text” of the tweet
-  \item  User Description
-  \item  Migration index
-  \item  Migration percentage
-  \item  Location
-\end{itemize}
- Migration index" is computed based on the Dictionary. This dictionary is a list of words which are related to migration along with corresponding weights which are manually assigned based on the severity level which is 1 to 5, 1 being negligible and 5 being extremely related to migration. This severity is calculated based on the word frequency. A word-cloud is generated with the collected tweets "text" and the severity number is assigned to the words based on the most frequently occurring word.
- I check all the tweets for the presence of words from this dictionary if present it gets the corresponding weights of all those words and mean is calculated for those weights. This mean is "Migration index". 
+
+
+ 
+Before classifying tweets using the machine learning approach, features must be extracted after the pre-processing step. Without the right set of features, even the powerful machine learning algorithm results badly. This was understood from the literature survey. As mentioned in problem formulation section, I am building two separate models, and both the models follow same feature extraction methods, but for the migration tweets classifier model has two additional features.
+
+In my research, I have created a heterogeneous feature set. Heterogeneous feature set advantages are discussed in \ref{chap:background}. Feature set contains, features extracted from the text using count vector technique, and additional two feature are added to this feature, that is ``Migration index" and ``Migration percentage".   
+
+I decided to create a feature vector using count vectorizer. This technique is simple to implement and decision to use this was based on the performance. The count vector is implemented using the "CountVectorizer" library from scikit learn \cite{scikit-learn}. The CountVectorizer library offers a simple way to tokenize a collection of text documents and build a vocabulary of known words, but also to encode new documents using that vocabulary. This library takes text document as input and to learn about the document a fit function is executed. Then an encoded vector with an entire vocabulary length and an integer count for the number of times each word appeared in the document is returned. The returned vector is a sparse as it contains many zeroes. This sparse matrix is handled using sparse library from scipy.org.
+
+Migration index" is computed based on the Dictionary. This dictionary is a list of words which are related to migration along with corresponding weights which are manually assigned based on the severity level which is 1 to 5, 1 being negligible and 5 being extremely related to migration. This severity is calculated based on the word frequency. A word-cloud is generated with the collected tweets "text" and the severity number is assigned to the words based on the most frequently occurring word.
+ I check all the tweets for the presence of words from this dictionary if present it gets the corresponding weights of all those words and mean is calculated for those weights. This mean value is "Migration index". 
  
 
 
-Presence of Migration word alone cannot necessarily mean the text is related
+Presence of Migration term in tweet message alone cannot necessarily mean the text is related
 to Human migration. The text/tweet can be considered more related to migration if the migration word is directed at a particular individual, a group of
-people, race, country, religion etc. For this reason, I also created a list of pronouns and collective nouns, with this ”Migration percentage” is calculated based on the presence of Migration word along with pronouns or collective nouns.   
+people, race, country, religion etc. For this reason, I also created a list of pronouns and collective nouns, with this ”Migration percentage” is calculated based on the presence of Migration word along with pronouns or collective nouns.
+
+\paragraph{Manual Annotations}
+The Data-sets collected are shared with five of my friends to annotate. Each annotator annotates the tweet with 2 labels. One as migration "yes" or "no" and second for the sentiment of the tweets "pos" or "neg". I take a mean those annotations and assign the labels for each collected tweet.
+
+
+Finally, the Count vector feature, migration index, migration percentage are combined and used a feature set. This set and its corresponding classes are split in test and training set, used as a input to supervised machine learning algorithm, which is discussed in the next section.
+
+    
 
 Location is obtained using the "Geopy" python library. The user location is passed to "Geopy" library to get latitude and longitude. 
 
 
-\subsection{Pre-processing}
 
+\subsection{Dataset split}
+Before we can train any model, we think about how to split the data first. There are two types of splitting the data such as:
+\begin{enumerate}
+    \item Test/Train sets
+  \item Test/Train/Dev sets
+\end{enumerate}
+The definitions of the three terms are as following:
 \begin{itemize}
-  \item Only ”English” tweets
-  \item Sort the tweets, Check similarity between consecutive tweets
-  \item Merge text and Description fields
-  \item Deleting all non-alphanumeric characters
-  \item Retrieving the location (latitude, longitude)
+     \item Train set: Sample of data used of learning.
+ 
+    \item Test set: Sample of data used for calculating the accuracy of model.
+      \item Dev set: Sample of data which is used for unbiased evaluation of the model performance.
 \end{itemize}
 
-\subsection{Manual Annotations}
-The Data-sets collected are shared with five of my friends to annotate. Each annotator annotates the tweet with 2 labels. One as migration "yes" or "no" and second for the sentiment of the tweets "pos" or "neg". I take a mean those annotations and add the labels for each collected tweet. 
+From now on I will be discussing about the two models, firstly migration detection and second, sentiment detection. For the migration detection model, I decided to divide the data set in test and train sets for the migration detection model, Because there were fewer tweets. It was split as 75\% train and 25\%test sets. The data is divided into test, train and dev sets for the sentiment detection model, because more tweets are available and this was split as 98\% train set, 1\%test set, and 1\% dev set.
+Distribution of the Tweets after the train/test split for migration dataset is shown in the table \ref{tab:Distmigrationdataset}. Distribution of the Tweets after the train/test/dev split for sentiment dataset is shown in the table \ref{tab:Distsentimentdatset}. This split was implemented using the ``modelselection" library from the scikit learn \cite{scikit-learn}.
 
-\subsection{Training}
+
+\begin{table}[]
+\centering
+\begin{tabular}{lllll}
+\cline{1-2}
+\multicolumn{1}{|l|}{Sets}   & \multicolumn{1}{l|}{number of tweets} &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Train} & \multicolumn{1}{l|}{956}  &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Test} & \multicolumn{1}{l|}{319}  &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Total}   & \multicolumn{1}{l|}{1275}  &  &  &  \\ \cline{1-2}
+                            &                           &  &  & 
+\label{tab:Distribution of sentiment class}
+\end{tabular}
+\caption{Distribution of train/test split for migration dataset}
+\label{tab:Distmigrationdataset}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{lllll}
+\cline{1-2}
+\multicolumn{1}{|l|}{Sets}   & \multicolumn{1}{l|}{number of tweets} &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Train} & \multicolumn{1}{l|}{1568000}  &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Dev} & \multicolumn{1}{l|}{16000 }  &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Test} & \multicolumn{1}{l|}{16000 }  &  &  &  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Total}   & \multicolumn{1}{l|}{1600000}  &  &  &  \\ \cline{1-2}
+                            &                           &  &  & 
+\label{tab:Distribution of sentiment class}
+\end{tabular}
+\caption{Distribution of train/dev/test split for migration dataset}
+\label{tab:Distsentimentdatset}
+\end{table}
+
+
+\subsection{Classification}
+I considered many classification algorithms to classify the tweets. But I finally decided to use only three algorithms based on the algorithm's accuracy and runtime.
+
+ 
+
+
+
+
 Data from the prepossessing step are used for the training a binary classifier,
 which will classify the Tweet as ”migration tweet or not”. The output data
 from this classifier is fed to another sentiment classifier, (which is trained from

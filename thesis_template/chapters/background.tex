@@ -99,6 +99,11 @@ Sometimes, word frequency might not give better feature sets when used in the ma
 
 \underline{conclude maddu, by comparing the literature survey of unigram and bigram n trigram, tell did we use ngram}
 
+\paragraph{Count vectorizer}
+Count vector is a type of word embedding based on frequency, while Word embedding format usually attempts to map a word to a vector using a dictionary. Here, dictionary is the list of all unique words in a document. One simple way is, a vector representation of a word is a one-hot encoded vector where 1 stands for the position where the word exists and 0 everywhere else. In count vectorizer, The one-hot encoding is replaced by  frequency of words. Now, in the matrix M where rows are the documents and columns are the word dictionary, the column can be understood as word vector for the corresponding word. There is a quite a few variations while preparing the above matrix M. The variations will be generally in the way dictionary is prepared.
+Because in real world applications we might have a corpus which contains millions of documents. And with millions of document, we can extract hundreds of millions of unique words. So basically, the matrix that will be sparse one and inefficient for any computation. So an alternative to using every unique word as a dictionary element would be to pick say top 10,000 words based on frequency and then prepare a dictionary. Another variation is the way count is taken for each word. Either take the frequency (number of times a word has appeared in the document) or the presence(has the word appeared in the document?) to be the entry in the count matrix M. But generally, frequency method is preferred over the latter.
+
+Consider a Corpus $C$ consisting $D$ documents {d1,d2…..dD} and $N$ unique tokens extracted out of the corpus $C$. The $N$ tokens will form our dictionary and the size of the Count Vector matrix $M$ will be given by $D X N$. Each row in the matrix $M$ contains the frequency of tokens in document $D(i)$.
 
 \paragraph{tf-idf}
 The Term Frequency-Inverse Document Frequency, tf-idf is another way of converting textual data to numeric form. The resulting vector value is the product of the two terms TF and IDF. Term frequency $tf$ is given in the equation (\ref{eqn:1}). So, now the inverse document frequency $idf$, which measures how important a word is to differentiate each document is calculated by using the equation in (\ref{eqn:5}). By replacing the terms from (\ref{eqn:4}), we get equation(\ref{eqn:6}). tf-idf is a dot product of the $tf$ and the $idf$ which is given in the equation (\ref{eqn:7})
@@ -198,6 +203,30 @@ Decision trees have a number of advantages. one such is that, it is easy to inte
 	\label{fig:Decision_tree}
 	\source{$http://www.nltk.org/book_1ed/ch06.html$}
 \end{figure}
+
+\subsection{Tools}
+In order to realize this research, Python programming language and many other external tools and libraries are used. Python is an extremely powerful tool, also it is open source and flexible which adds to its popularity. It is known to have massive libraries for data manipulation and is extremely easy for all data analysts to learn and use. Some of the important libraries which is used in in this research are discussed in the following section.  
+
+
+\begin{itemize}
+    \item NLTK
+    \item Scikit-learn: \\
+    It  \cite{scikit-learn} is a free software machine learning library for python programming language. It is a tool for data pre-processing and data analysis, and offers many machine algorithms as well. The Scikit-learn project aims to provide state-of-the-art implementations for a wide range of machine learning methods, it has a clean API that is robust, fast, easy to use, comprehensive and well documented. The Document is provides more detailed information to the experienced data analyst, while at the same time simple, key points of a topic to the beginner. Some key elements of the framework are illustrated below.
+    
+    \begin{itemize}
+        \item Countvectorizer
+        \item Feature union
+        \item train test split
+    \end{itemize}
+    
+    
+ 
+    
+    \item Pandas \\
+    \cite{pythonpandas}
+\end{itemize}
+
+
 
 \section{Related works in mining Twitter social media data}
 
