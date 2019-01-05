@@ -52,7 +52,7 @@ Apart from all these techniques mentioned above, Language of the text plays an i
 
 Once the data is collected from the same language and preprocessed, the data can be fed to feature extraction and engineering step.
 
-\subsubsection{Feature Extraction and Engineering}
+\subsubsection{Feature Extraction and Engineering} \label{backgroundworkFeatureEngi}
 
 Feature engineering is another important step in construction of an intelligent system. Although there are many new technologies, such as deep learning and meta-heuristics, that help with automated machine learning, Each problem is domain specific and better features (problem-friendly) are often the decisive factor in our system performance. This is why Data scientist spend most of the time in data preparation and feature extracting. Alomst 70\% of time is spent in this step before model preparation. As famous researcher on the feild of data science Andrew Ng, quotes ``Coming up with features is difficult, time-consuming, requires expert knowledge. `Applied machine learning' is basically feature engineering.". Which explains why this steps is time consuming and difficult. This step requires both domain knowledge and mathematical computations. Another researcher Dr. Jason Brownlee, quotes ``Feature engineering is the process of transforming raw data into features that better represent the underlying problem to the predictive models, resulting in improved model accuracy on unseen data.". This explains us that perhaps feature engineering is the mechanism of converting data into features that act as variables for machine learning models to improve the overall performance of the model.
 
@@ -190,7 +190,7 @@ Advantages of Logistic Regression is Lots of ways to regularize the model, and y
 \underline{bari guru - abt literature }
 
 \subsubsection{DecisionTree}
-A decision tree is a simple flowchart/tree that selects labels for input values. \cite{BirdKleinLoper09} discusses about the Decision trees classifier in text classification. The decision tree is a tree whose internal nodes are tests and whose leaf nodes are categories. An example decicion tree model is given in the fig \ref{fig:Decision_tree}. This tree is the model to classify the names into gender class. The tree consists of decision nodes, which check feature values, and leaf nodes, which assign labels. Using this decision tree, a new input value can be assigned to a label. But building the decision tree is not straightforward. The feature on which the decision tree to build or the decision stump is not defined. The simplest method to decide which feature to use first while building a tree is, just build a decision stump for each possible feature and check for the best accuracy on training data. Other method is to consider a feature which gives maximum information. There are many methods to calculate the maximum information, one such method is calculating the entropy of input feature of the particular labels. Based on the entropy calculated on the input variables, the decision stump is decided and the decision tree is built.
+A decision tree is a simple flowchart/tree that selects labels for input values. \cite{BirdKleinLoper09} discusses about the Decision trees classifier in text classification. The decision tree is a tree whose internal nodes are tests and whose leaf nodes are categories. An example decicion tree model is given in the fig \ref{fig:Decision_tree} . This tree is the model to classify the names into gender class. The tree consists of decision nodes, which check feature values, and leaf nodes, which assign labels. Using this decision tree, a new input value can be assigned to a label. But building the decision tree is not straightforward. The feature on which the decision tree to build or the decision stump is not defined. The simplest method to decide which feature to use first while building a tree is, just build a decision stump for each possible feature and check for the best accuracy on training data. Other method is to consider a feature which gives maximum information. There are many methods to calculate the maximum information, one such method is calculating the entropy of input feature of the particular labels. Based on the entropy calculated on the input variables, the decision stump is decided and the decision tree is built.
 
 Decision trees have a number of advantages. one such is that, it is easy to interpret and understand. Another advantage is, it can predict both categorical and continuous label. \underline{bari guru - abt literature }
 
@@ -201,15 +201,95 @@ Decision trees have a number of advantages. one such is that, it is easy to inte
 	\includegraphics[width=0.5\linewidth]{images/Decisiontrees.png}
 	\caption{Decision trees model to classify the gender of the names.}
 	\label{fig:Decision_tree}
-	\source{$http://www.nltk.org/book_1ed/ch06.html$}
+	\source{\url{http://www.nltk.org/book_1ed/ch06.html}}
 \end{figure}
+
+\subsection{Classification Scoring Metrics}
+
+The performance of the classification model should be tested when the classification model is built. One way is to check the accuracy of the model, which is number of correct prediction out of all predictions \ref{eqn:accuracy}. 
+
+
+\begin{equation}
+\label{eqn:accuracy}
+accuracy = \frac{correct predictions}{number of predictions}
+\end{equation}
+
+However, classification accuracy alone is usually insufficient information to check the classifier's performance if the number of input samples is not balanced. Because even if the model's accuracy is high, the prediction is biased towards the major class. 
+
+So, several different metrics exist for evaluating the performance of a classifier. This section presents the scoring metrics used in this project.
+
+\begin{itemize}
+ \item Confusion matrix
+ 
+ A confusion matrix is a table used to describe the prediction results of a classifier. This table can be used to describe the performance of the classifier. For instance, For a binary classifier, the table has 2 rows and 2 columns. The columns represent observed labels and the rows represent the predicted labels, shown in the table \ref{tab:confusionmatrix}.
+ 
+ \begin{itemize}
+     \item True Positve($TP$) : When the prediction is positive and it’s true.
+     \item False Positive($FP$) : When the prediction is positive and it’s false.
+     \item False Negative($FN$) : When the prediction is negative and it’s false.
+     \item True Negative($TN$) : When the prediction is negative and it’s true.
+ \end{itemize}
+ 
+\begin{table}[]
+\centering
+\begin{tabular}{lllll}
+\cline{1-3}
+\multicolumn{1}{|l|}{}   & \multicolumn{1}{l|}{Positive} & \multicolumn{1}{l|}{Negative}  &  &  \\ \cline{1-3}
+\multicolumn{1}{|l|}{Positive} & \multicolumn{1}{l|}{True Positive}  & \multicolumn{1}{l|}{False Positive} &  &  \\ \cline{1-3}
+\multicolumn{1}{|l|}{Negative}   & \multicolumn{1}{l|}{False Negative}  & \multicolumn{1}{l|}{True Negative}  &  &  \\ \cline{1-3}
+                            &                           &                           &  & 
+\end{tabular}
+\caption{Confusion matrix}
+\label{tab:confusionmatrix}
+\end{table}
+  From this table, previous known labels and predicted labels distribution can be understood, errors in prediction can be detected. In this research, confusion matrix of the both the models(migration detection and sentiment detection) is calculated to check the performance of the machine learning algorithms.
+ 
+    \item Precision
+    
+    Precision is also called as positive predictive value, In binary classification, it is the number of positive prediction divided by the total number of predicted positive class values. Precision can be thought of as a measure of a classifiers exactness. It is defined in the equation \ref{eqn:Precision}. 
+    
+    \begin{equation}
+    \label{eqn:Precision}
+    Precision = \frac{TP}{TP + FP}
+    \end{equation}
+    
+    Where $TP$ is true positive and $FP$ is false positive.
+    
+    \item Recall
+    
+    Recall is another performance metric in binary classification, is defined as, number of positive predictions divided by the number of positive class values in the test data. It can be thought of as a measure of a classifiers completeness. It is shown in the equation \ref{eqn:Recall} 
+    
+    \begin{equation}
+        \label{eqn:Recall}
+    Recall = \frac{TP}{TP + FN}
+    \end{equation}
+    
+     Where $TP$ is true positive and $FN$ is false negative.
+    
+    \item F1-score
+   
+    Which is also called as F-measure, this weights precision and recall evenly, and is give in the equation \ref{eqn:F1}.
+    
+        \begin{equation}
+        \label{eqn:F1}
+    F1 = \frac{2 * recall * precision}{precision + recall}
+    \end{equation}
+    In this research, F1 score is calculated to understand the performance of the model along with its accuracy.
+\end{itemize}
+
+\subsection{Annotations}
+
+Annotations in machine learning is the process of labelling the data, which could be in forms like images, text, audio. For example, an image can be labeled as portrait or a landscape. The computers can learn to recognize patterns and classify new data to the corresponding labels using annotated data. Annotation is usually done manually by humans, moreover crowdsourcing can speed up the process and spread out the workload. An example of crowdsourcing is Amazon Mechanical Turk \footnote{https://www.mturk.com/}, which can be used for carry out annotations task. This technique of using crowdsourcing to annotate emotions in the tweets was used by \cite{Mohammad:2010:EEC:1860631.1860635}. But this crowdsourcing should be compensated for their task, due this reason in this research, I shared my dataset with my colleagues for annotation, who understood english language. The tweets were annotated by each annotator, and the mean those annotations were taken as the final label.  
 
 \subsection{Tools}
 In order to realize this research, Python programming language and many other external tools and libraries are used. Python is an extremely powerful tool, also it is open source and flexible which adds to its popularity. It is known to have massive libraries for data manipulation and is extremely easy for all data analysts to learn and use. Some of the important libraries which is used in in this research are discussed in the following section.  
 
 
 \begin{itemize}
-    \item NLTK
+    \item NLTK \\
+    NLTK(Natural Languge Toolkit) is one of the most important platform for building python programs to work with human langauge data. It has a comprehensive API documentation plus it provides libraries for classification, tokenization, stemming, word frequency. This library was used to geneate the word cloud using the word frequency. word cloud is an image composed of words used in a particular text, in which the size of each word indicates its frequency or importance.
+    
+  
     \item Scikit-learn: \\
     It  \cite{scikit-learn} is a free software machine learning library for python programming language. It is a tool for data pre-processing and data analysis, and offers many machine algorithms as well. The Scikit-learn project aims to provide state-of-the-art implementations for a wide range of machine learning methods, it has a clean API that is robust, fast, easy to use, comprehensive and well documented. The Document is provides more detailed information to the experienced data analyst, while at the same time simple, key points of a topic to the beginner. Some key elements of the framework are illustrated below.
     
@@ -223,7 +303,11 @@ In order to realize this research, Python programming language and many other ex
  
     
     \item Pandas \\
-    \cite{pythonpandas}
+   Pandas \cite{pythonpandas} is a open source library for python programming language , which provide easy-to-use data structures and data analysis tools. The data can be presented in suitable way using its Series and DataFrame data structure.
+  There are several methods in this package for convenient data filtering. Pandas have a variety of tools for seamlessly performing input and output operations. Data can be read from different formats such as CSV(comma seperated values), TSV(tab seperated values), MS Excel, etc.
+
+
+
 \end{itemize}
 
 

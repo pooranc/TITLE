@@ -137,9 +137,11 @@ One element which made Twitter popular social media network is that it limits yo
 
 \subsubsection{Message cleaning}
 In this step, the text in the tweet message is cleaned. The message of the Tweet contains only 140 characters, To this user description is added. But, as mentioned before, This limited size constraints make people to shorten the message using acronyms and wrong spelling. 
-In order to create a purer data set for the classifier training, message cleaning techniques are used. First, all the characters are converted to lowercase. Once it is normalized into single basic structure, several techniques are applied such as remove URL's, remove non-alphanumeric characters. This is implemented using the regular expression, which is a efficient string replacement algorithm. Another actions was performed was removal of the stop words. Stop words are the commonly occuring words(such as "a", "the", "is", "in") because it just adds the number of words and provide less information. also takes processing time. This was done using the NLTK library which is available in python language, it has the stopwords list of for 16 different languages.  
+In order to create a purer data set for the classifier training, message cleaning techniques are used. First, all the characters are converted to lowercase. Once it is normalized into single basic structure, several techniques are applied such as remove URL's, remove non-alphanumeric characters. This is implemented using the regular expression, which is a efficient string replacement algorithm. Another actions was performed was removal of the stop words. Stop words are the commonly occuring words(such as "a", "the", "is", "in") because it just adds the number of words and provide less information. also takes processing time. This was done using the NLTK library which is available in python language, it has the stopwords list of for 16 different languages. 
+\subsubsection{Manual Annotations}
+The Data-sets collected are shared with three of my colleagues to annotate. Each annotator annotates the tweet with 2 labels. One as migration "yes" or "no" and second for the sentiment of the tweets "pos" or "neg". I take a mean of those annotations and assign the labels for each collected tweet.
 
-\subsection{Feature engineering}
+\subsection{Feature engineering} \label{featureengineering}
 
 
  
@@ -158,12 +160,17 @@ Presence of Migration term in tweet message alone cannot necessarily mean the te
 to Human migration. The text/tweet can be considered more related to migration if the migration word is directed at a particular individual, a group of
 people, race, country, religion etc. For this reason, I also created a list of pronouns and collective nouns, with this ”Migration percentage” is calculated based on the presence of Migration word along with pronouns or collective nouns.
 
-\paragraph{Manual Annotations}
-The Data-sets collected are shared with five of my friends to annotate. Each annotator annotates the tweet with 2 labels. One as migration "yes" or "no" and second for the sentiment of the tweets "pos" or "neg". I take a mean those annotations and assign the labels for each collected tweet.
 
 
-Finally, the Count vector feature, migration index, migration percentage are combined and used a feature set. This set and its corresponding classes are split in test and training set, used as a input to supervised machine learning algorithm, which is discussed in the next section.
 
+Finally, the Count vector feature, migration index, migration percentage are combined and used a feature set, which is shown in the fig \ref{fig:featureeng}. This set and its corresponding classes are split in test and training set, and used as a input to supervised machine learning algorithm, which is discussed in the next section.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=10cm\linewidth,height=10cm]{thesis_template/images/featureengineering.png}
+	\caption{Migration model feature engineering}
+	\label{fig:featureeng}
+\end{figure}
     
 
 Location is obtained using the "Geopy" python library. The user location is passed to "Geopy" library to get latitude and longitude. 
@@ -221,15 +228,30 @@ Distribution of the Tweets after the train/test split for migration dataset is s
 
 
 \subsection{Classification}
-I considered many classification algorithms to classify the tweets. But I finally decided to use only three algorithms based on the algorithm's accuracy and runtime.
-
- 
+As mentioned above, this project incorporates two classifier models. One, migration detection classifier, another model for sentiment detection. The tweets classified as migration tweets are transferred to the second model in order to detect their sentiment. The feature extraction method is slightly different for both models. For the migration model, the feature set contains a tweet message count vector, migration index, and migration percentage. However, the sentiment detection model contains only the tweet message count vector as a feature set. So, these feature set are passed as the input to the classifier. To classify tweets, there are many algorithms. However, I have compared the accuracy of three classifier algorithms, such as naive Bayes, logistic regression and decision trees. The classifier learns a pattern based on the inputs and classifies new samples into specific classes.
 
 
 
+\subsection{Evaluation}
 
-Data from the prepossessing step are used for the training a binary classifier,
-which will classify the Tweet as ”migration tweet or not”. The output data
-from this classifier is fed to another sentiment classifier, (which is trained from
-Stanford data) to understand the opinion of the migration tweets.
-\textbf{NOTE: Currently selected classifiers are Logistic regression, Naive Bayes, SVM. This is subjected to change based on performance}
+Two types evaluation is conducted in this research,
+\begin{enumerate}
+    \item To evaluate the migration detection model. This is conducted by 2 methods:
+    \begin{itemize}
+        \item First method : 
+        Evaluate the classifier model by splitting the data with
+        test and train data set, as the ground truth is manually annotated. And then calculating the F1 score on the "Test data set".
+        \item Second method :
+        \begin{itemize}
+            \item With Canadian migration data [2], which is a migration-related dataset where each tweet in the dataset belongs to migration (label "yes"). A subset (1000 tweets) will be taken at first, along
+            with 1000 tweets which belong to general categories where these tweets are manually picked which are not related to migration (label "no"). 
+            \item With these 2000 general and Canadian tweets, Another set of tweets which are collected from the hashtags from the data- collection step are combined together totaling to 3000 tweets.
+            \item A binary classifier will be trained from the above tweets, and the accuracy of this model and the model which is built only from the prepossessing step is compared. To check whether the model with manually collected and annotated tweets perform better or the model with other migration data classifier.
+        \end{itemize}
+        
+    \end{itemize}
+
+
+    \item Evaluating the Sentiment analysis is performed with the "test data set",
+by calculating the F1 score, Accuracy.
+\end{enumerate}
