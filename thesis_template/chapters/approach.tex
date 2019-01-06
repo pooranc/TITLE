@@ -100,7 +100,7 @@ Beside the migration dataset, two additinal dataset is collected. First, for sen
 
 
 
-\subsection{Pre-processing}
+\subsection{Pre-processing} \label{preprocessing}
 The overall system output standards depend on the quality of the input data. The additional information provided by Twitter data(example: user mentions, url's) does not provide many useful properties. Hence to enhance the quality  of the input information a pre-preparing stage is required. The pre-processing step applies to all three collected data sets. Since the data sets only contain Twitter data, the preprocessing step is common for all data sets. Pre-processing process involves many steps: language check, removal of duplicate , merging tweet message and user description, message cleaning which is show in the figure \ref{fig:preprocessing}. 
 
 The tweets in the dataset are present in JSON format, so each line of the file is a JSON object. The preprocessing script reads the file line by line, parses each line into JSON object and acts as follows.
@@ -232,21 +232,23 @@ As mentioned above, this project incorporates two classifier models. One, migrat
 
 
 
-\subsection{Evaluation}
+\subsection{Evaluation} \label{eval}
+Once the problem is set and the data is prepared, machine learning model is applied to solve the problem. Before applying the machine learning model a test harness need to be defined. The test harness is the data which is used to test the trained algorithm. The performance of the algorithm is measured using the test harness, performance metrics are discussed in the Section \ref{scoringmetrics}.
 
 Two types evaluation is conducted in this research,
 \begin{enumerate}
     \item To evaluate the migration detection model. This is conducted by 2 methods:
     \begin{itemize}
         \item First method : 
-        Evaluate the classifier model by splitting the data with
-        test and train data set, as the ground truth is manually annotated. And then calculating the F1 score on the "Test data set".
+        The classifier is evaluated using the test data set, by calculating the performance metric.
         \item Second method :
+         This method is undertaken to check the performance of the algorithm based on the data set, but for the same problem of detecting the migration tweets.
         \begin{itemize}
-            \item With Canadian migration data [2], which is a migration-related dataset where each tweet in the dataset belongs to migration (label "yes"). A subset (1000 tweets) will be taken at first, along
-            with 1000 tweets which belong to general categories where these tweets are manually picked which are not related to migration (label "no"). 
-            \item With these 2000 general and Canadian tweets, Another set of tweets which are collected from the hashtags from the data- collection step are combined together totaling to 3000 tweets.
-            \item A binary classifier will be trained from the above tweets, and the accuracy of this model and the model which is built only from the prepossessing step is compared. To check whether the model with manually collected and annotated tweets perform better or the model with other migration data classifier.
+       
+            \item With Canadian migration data \footnote{\url{https://data.world/wendyhe/tweets-on-canada-immigration}}, which is a migration-related dataset where each tweet in the dataset belongs to migration (label "yes"). This datset contains 800 tweets. Along
+            with this another 800 tweets which belong to random categories are added, where these tweets are manually picked which are not related to migration (label "no"). 
+            \item With these 1600 random and canadian tweets, migration data set which are collected in the data collection step are combined together totaling to around 2600 tweets.
+            \item A binary classifier will be trained from the above tweets, and the accuracy of this model and the model which is built only from migration dataset is compared.
         \end{itemize}
         
     \end{itemize}
