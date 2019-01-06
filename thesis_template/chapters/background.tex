@@ -5,13 +5,13 @@ machine learning pipeline, data crawling, and stuff
     
 \section{Technical Background}
 
-The core task of detecting the Sentiment of the Tweets which are related to ``Human Migration" requires techniques related to Data mining, Text mining and Machine Learning. For instance, typical Data analysis systems first extract Data regarding the ``Human migration" from the tweets, and supervised classifier such as Logistic regression or Naive bayes or SVM  are used for classification and detection. Thus, Data mining and classifier algorithms are the core tools in this computation analysis and hence are covered in this section.
+The core task of detecting the Sentiment of the Tweets which are related to ``Human Migration" requires techniques related to Data mining, Text mining and Machine Learning. For instance, typical Data analysis systems first extract Data regarding the ``Human migration" from the tweets, and supervised classifier such as logistic regression or Naive Bayes or decision trees  are used for classification and detection. Thus, Data mining and classifier algorithms are the core tools in this computation analysis and hence are covered in this section.
 
 \subsection{Twitter Data analysis}
 
 Twitter is one of the well known online social networks, People use this to communicate short messages (140 character length) called tweets and express opinion on various topics that they are interested in. It is also called ``Microblogging", which is different from other social media platform like Facebook. One more thing which makes Twitter different from Facebook is, Networking is not bidirectional. Which means connections don't have to be mutual. Another  potential aspect of choosing Twitter for mining data is, It popularized the term hashtags. Which is used to group a  conversation and user can follow a particular topic.
 
-Twitter provides number of APIs to collect Twitter data programmatically. \cite{TwitterDevDocs} Gives a complete list of all Twitter APIs and the steps to set up project to access Twitter data. Data from these APIs can be collected by more than one way, which can be broadly categorized as REST APIs and Streaming APIs . But, Twitter API limits access to applications. The rate limits are described in the link  \footnote{https://developer.twitter.com/en/docs/basics/rate-limiting}. Usually the REST APIs are used to search for the existing tweets or tweets which are already published. These APIs are not only rate limited also they are limited based on the time span (search tweets back to one week). Then, the streaming APIs can be used to collect tweets as per our search criteria and as they publish in current timel(example: live events). These APIs are rate limited on a per-user basis. Based on above two limitations, I choose to use the Twitter data archives \footnote{https://archive.org/details/twitterstream?and[]=year\%3A\%222016\%22}. This gave me an advantage of choosing a data dump which is based on a particular time.   
+Twitter provides a number of APIs to collect Twitter data programmatically. \cite{TwitterDevDocs} Gives a complete list of all Twitter APIs and the steps to set up the project to access Twitter data. Data from these APIs can be collected by more than one way, which can be broadly categorized as REST APIs and Streaming APIs . But, Twitter API limits access to applications. The rate limits are described in link  \footnote{https://developer.twitter.com/en/docs/basics/rate-limiting}. Usually, the REST APIs are used to search for the existing tweets or tweets which are already published. These APIs are not only rate limited also they are limited based on the time span (search tweets back to one week). Then, the streaming APIs can be used to collect tweets as per our search criteria and as they publish in current time(example: live events). These APIs are rate limited on a per-user basis. Based on the above two limitations, I choose to use the Twitter data archives \footnote{https://archive.org/details/twitterstream?and[]=year\%3A\%222016\%22}. This gave me an advantage of choosing a data dump which is based on a particular time.   
 
 
 
@@ -27,34 +27,34 @@ Time metadata.
 3) data mining with tweets bagge bari
 
 
- But, building a successful system to detect Human migration Tweets and predicting the opinion of these Tweets requires selecting relevant features and a suitable machine learning model. With respect to Twitter data, These are obtained as JSON format. Each object contains metadata like Hashtags, Topics, Time series, Geo-tags along with these Users, Followers, and Communities. The ``Text" metadata in the Tweet is noisy as it is only 140 characters long(recently increased to 280 characters) and people would shorten the words in an unexpected manner. Traditionally while building a machine learning model "Text" metadata is used a feature. As it has many other particular features like Mentions(@user) and Hashtags(\# topic) which provide useful information.
+ But, building a successful system to detect Human migration Tweets and predicting the opinion of these Tweets requires selecting relevant features and a suitable machine learning model. With respect to Twitter data, These are obtained as JSON format. Each object contains metadata like Hashtags, Topics, Time series, Geo-tags along with these Users, Followers, and Communities. The ``Text" metadata in the Tweet is noisy as it is only 140 characters long(recently increased to 280 characters) and people would shorten the words in an unexpected manner. Traditionally while building a machine learning model "Text" metadata has used a feature. As it has many other particular features like Mentions(@user) and Hashtags(\# topic) which provide useful information.
  
  
 \subsection{Text mining}
 
-In the Previous section, I discussed about the Twitter APIs and the Twitter data sets. This subsection focuses on the techniques and processes of using the Text for classification and addition of other features along with text to improve the accuracy of the classifier algorithms.  In this chapter pre-processing of the data, the feature selection are discussed.
+In the Previous section, I discussed the Twitter APIs and the Twitter datasets. This subsection focuses on the techniques and processes of using the Text for classification and addition of other features along with text to improve the accuracy of the classifier algorithms.  In this chapter pre-processing of the data, the feature selection is discussed.
 
 \subsubsection{Data Pre-processing}
 
-Pre-processing of data is one of the main steps in any data mining experiments. This step is extensively used and studied by lot of applications which uses unstructured, raw data. The Data that does not have a recognizable structure or less ordered is called as unstructured data.  Though we do have the data, analyzing raw format data produce misleading results if the data is not carefully screened. So, data need to be structured and formatted, which makes Data Pre-processing step important and necessary.
+Pre-processing of data is one of the main steps in any data mining experiments. This step is extensively used and studied by a lot of applications which uses unstructured, raw data. The Data that does not have a recognizable structure or less ordered is called as unstructured data.  Though we do have the data, analyzing raw format data produce misleading results if the data is not carefully screened. So, data need to be structured and formatted, which makes Data Pre-processing step important and necessary.
 
-Usually, All the \underline{[list of the literature in the paper]} performs preprocessing on the Twitter data for their analysis. Steps like removing the unwanted symbols, Filtering tweets, removing the stop words,  correcting errors, converting the text to lowercase are common in most of the Text preprocessing experiments.
+Usually, All the \underline{[list of the literature in the paper]} performs preprocessing on the Twitter data for their analysis. Steps,  like removing the unwanted symbols, filtering tweets, removing the stop words,  correcting errors, converting the text to lowercase are common in most of the Text preprocessing experiments.
 
-Symbols like `@' and `\#' which are used to mention users(eg:@john) and describe the topic(eg:\#elections2018) respectively which are often present in text of the Tweet, can be removed. Because, these symbols will not give useful information while analyzing text. Just like these symbols, stop words are also removed. Stop words are the words which occur most frequently(eg: the, is, at, which, on), which are removed from text in most of the Natural language processing projects. 
+Symbols like `@' and `\#' which are used to mention users(eg:@john) and describe the topic(eg:\#elections2018) respectively which are often present in the text of the Tweet, can be removed. Because these symbols will not give useful information while analyzing text. Just like these symbols, stop words are also removed. Stop words are the words which occur most frequently(eg: the, is, at, which, on), which are removed the from text in most of the Natural language processing projects. 
 
-Removal of repeated data is also significant step in text analysis. There might be lot of repeated Tweets, Re-tweets or repeated letters in the words(example: `Greattttt', `Aweeeeesome!!!!'). A filter technique is applied to remove or check for the similarity of tweets and avoid duplicates. In addition to this duplicate check step, one more step in every text analysis experiment is to convert the text to a lower case. Text often has a variety of capitalization reflecting the beginning of sentences, proper nouns emphasis. Which should normalized into a single form. But but care should be taken using regular expression or dictionary of words as it should not change the meaning (example: `US' to `us').
+Removal of repeated data is also a significant step in text analysis. There might be a lot of repeated Tweets, Re-tweets or repeated letters in the words(example: `Greattttt', `Aweeeeesome!!!!'). A filtering technique is applied to remove or check for the similarity of tweets and avoid duplicates. In addition to this duplicate check step, one more step in every text analysis experiment is to convert the text to a lower case. The text often has a variety of capitalization reflecting the beginning of sentences, proper nouns emphasis. Which should be normalized into a single form. But care should be taken using regular expression or dictionary of words as it should not change the meaning (example: `US' to `us').
 
-Another widely recognized method to filter strings/texts is using a regular expression \cite{Thompson}. It provides a easy way to recognize substrings when we have the pattern to search and the text document. The regular expression search function searches the entire corpus(large and structured set of texts) and return the substring based on the pattern. Regular expression are just special sequence of characters for identifying strings. It is now a standard feature in almost all programming language and tools which has a capacity to fit nearly all string patterns.   
+Another widely recognized method to filter strings/texts is using a regular expression \cite{Thompson}. It provides an easy way to recognize substrings, when we have the pattern to search and the text document. The regular expression search function searches the entire corpus(large and structured set of texts) and return the substring based on the pattern. A regular expression is just a special sequence of characters for identifying strings. It is now a standard feature in almost all programming language and tools which has a capacity to fit nearly all string patterns.   
 
-Another helpful method which can be used in data pre-processing step for text is Stemming. It is a process of reducing the word to its word stem which is the original root form. An example for stemming method is it reduce the word "cheaper" to "cheap" and "cheapest" to "cheap". This helps in reducing the number of words, in-turn aids in giving better results while analyzing the text data.
+Another helpful method which can be used in data pre-processing step for text is Stemming. It is a process of reducing the word to its word stem which is the original root form. An example of a stemming method is it reduces the word "cheaper" to "cheap" and "cheapest" to "cheap". This helps in reducing the number of words, in-turn aids in giving better results while analyzing the text data.
 
-Apart from all these techniques mentioned above, Language of the text plays an important role. Different language has different grammar, set of words. As mentioned in previous methods, if the data is clean and preprocessed, an  accurate classifier models can be trained. If the Text from the different languages is used, a noise will be introduced later when the classifier is trained. Building a general model for all the languages will be difficult as grammar and wordset of languages differs. Model built using the english language text cannot be used on hindi language text. Consequently, Language detection is necessary. Collecting the data of a single language can be done by two operations, either by translation or filtering. Both steps requires to process of identifying language. One simple method is to understand the distribution of the characters per language. This is one of the interesting field of research in Natural Language Processing, to identify languages. 
+Apart from all these techniques mentioned above, Language of the text plays an important role. Different language has different grammar, set of words. As mentioned in previous methods, if the data is clean and preprocessed, accurate classifier models can be trained. If the Text from the different languages is used, a noise will be introduced later when the classifier is trained. Building a general model for all the languages will be difficult as grammar and wordset of languages differ. Model built using the English language text cannot be used on Hindi language text. Consequently, Language detection is necessary. Collecting the data of a single language can be done by two operations, either by translation or filtering. Both steps requires to process of identifying language. One simple method is to understand the distribution of the characters per language. This is one of the interesting field of research in Natural Language Processing, to identify languages. 
 
 Once the data is collected from the same language and preprocessed, the data can be fed to feature extraction and engineering step.
 
 \subsubsection{Feature Extraction and Engineering} \label{backgroundworkFeatureEngi}
 
-Feature engineering is another important step in construction of an intelligent system. Although there are many new technologies, such as deep learning and meta-heuristics, that help with automated machine learning, Each problem is domain specific and better features (problem-friendly) are often the decisive factor in our system performance. This is why Data scientist spend most of the time in data preparation and feature extracting. Alomst 70\% of time is spent in this step before model preparation. As famous researcher on the feild of data science Andrew Ng, quotes ``Coming up with features is difficult, time-consuming, requires expert knowledge. `Applied machine learning' is basically feature engineering.". Which explains why this steps is time consuming and difficult. This step requires both domain knowledge and mathematical computations. Another researcher Dr. Jason Brownlee, quotes ``Feature engineering is the process of transforming raw data into features that better represent the underlying problem to the predictive models, resulting in improved model accuracy on unseen data.". This explains us that perhaps feature engineering is the mechanism of converting data into features that act as variables for machine learning models to improve the overall performance of the model.
+Feature engineering is another important step in construction of an intelligent system. Although there are many new technologies, such as deep learning and meta-heuristics, that help with automated machine learning, Each problem is domain specific and better features (problem-friendly) are often the decisive factor in our system performance. This is why Data scientist spend most of the time in data preparation and feature extracting. Almost 70\% of time is spent in this step before model preparation. As famous researcher on the field of data science Andrew Ng, quotes ``Coming up with features is difficult, time-consuming, requires expert knowledge. `Applied machine learning' is basically feature engineering.". Which explains why this steps is time-consuming and difficult. This step requires both domain knowledge and mathematical computations. Another researcher Dr. Jason Brownlee, quotes ``Feature engineering is the process of transforming raw data into features that better represent the underlying problem to the predictive models, resulting in improved model accuracy on unseen data.". This explains us that perhaps feature engineering is the mechanism of converting data into features that act as variables for machine learning models to improve the overall performance of the model.
 
 Features can be broadly categorized as Raw features and Derived features. Raw features are the one which are obtained directly from the dataset and the derived features are obtained from feature engineering. Data is available in many diverse forms like "Continuous, numeric data", "Discrete, categorical data" . Data which are stored as a scalar values, which usually represents recordings, measurements or observations are referred as Continuous, numeric data (it can also be represented as vector but each value represent a feature). Although numerical data can be effectively fed into machine learning models, we will still need to develop situation, problem and domain-relevant features before even building a model. In contrast to continuous numeric data, the categorical data attribute are represented as discrete values that belong to a certain limited set of categories or classes. which are also often referred to as classes or labels in the context of attributes or variables that a model must predict. This categorical data as two types, nominal and ordinal. In nominal attributes, There is no concept of ordering within the attribute's values(eg: zip codes, employeeIDs, eye color, gender: {male, female}). For ordinal attributes, there exist a sense or idea of order in their values(eg: hardness of minerals, grades, street numbers, quality: {good, better,
 best}). Now that we have addressed the types of data representation, 
@@ -68,11 +68,11 @@ The importance of feature engineering is even more significant for unstructured 
 A n-gram is an adjacent sequence of n words from a source of text. The n-gram method is a relatively simple algorithm. For instance, 
 \begin{itemize}
   \item "Apple" - is a uni-gram(n = 1)
-  \item "New york" - is a bigram(n = 2)
-  \item "I love pizza" - is a bigram(n = 2)
+  \item "New York" - is a bigram(n = 2)
+  \item "I love pizza" - is a trigram(n = 2)
   \item "He is walking slowly" - is a n-gram where(n = 4)
 \end{itemize}
-Now if we calculate the probability of a word occurring next in a sequence of words, it can be very useful. \cite{groot2012data} explains the about the n-gram and feature extraction while working on detecting the sentiment of the tweet. For unigrams where n=1, every tweet's text is split into words and each word is considered. The frequency count of all words in all documents leads to a word frequency table. High frequency words are more likely to show up in texts, now these words better describe the dataset. Frequency can be measured among all the documents by two types such as: summed term frequency and document frequency. Summed term frequency is computed by adding all the term frequencies of the words and document frequency is number of text document the word present in. These two frequency measure are based on term frequency and the term presence. The term frequency $tf(w,d)$ is the number of times in document $d$, a word $w$ occurs which is showed in the equation (\ref{eqn:1}). In terms frequency, we can assume the value in the [0-n] range, where n is the number of words in the document because all occurrences of a word in a document are counted for the calculation. And the term presence $tp(w,d)$ only checks whether a word $w$ is present in a document $d$, resulting in a binary value (\ref{eqn:2}).
+Now if we calculate the probability of a word occurring next in a sequence of words, it can be very useful. \cite{groot2012data} explains the about the n-gram and feature extraction while working on detecting the sentiment of the tweet. For unigrams where n=1, every tweet's text is split into words and each word is considered. The frequency count of all words in all documents leads to a word frequency table. High-frequency words are more likely to show up in texts, now these words better describe the dataset. Frequency can be measured among all the documents by two types such as: summed term frequency and document frequency. Summed term frequency is computed by adding all the term frequencies of the words and document frequency is number of text document the word present in. These two frequency measurements are based on term frequency and the term presence. The term frequency $tf(w,d)$ is the number of times in document $d$, a word $w$ occurs which is showed in the equation (\ref{eqn:1}). In terms frequency, we can assume the value in the [0-n] range, where n is the number of words in the document because all occurrences of a word in a document are counted for the calculation. And the term presence $tp(w,d)$ only checks whether a word $w$ is present in a document $d$, resulting in a binary value (\ref{eqn:2}).
 
 \begin{equation}
 \label{eqn:1}
@@ -85,7 +85,7 @@ tf(w,d) = |\{w \epsilon d\}|
     0, & \text{if $w \not\in d$}.
   \end{cases}
 \end{equation}
-So, now the summed term frequency $stf(w,D)$ is calculated by computing the sum of all term frequencies (\ref{eqn:3}). The frequency of documents $df(w,D)$ refers to the number of documents a word occurs in (\ref{eqn:4}). The equations are refered from \cite{groot2012data}.
+So, now the summed term frequency $stf(w,D)$ is calculated by computing the sum of all term frequencies (\ref{eqn:3}). The frequency of documents $df(w,D)$ refers to the number of documents a word occurs in (\ref{eqn:4}). The equations are referenced from \cite{groot2012data}.
 
 \begin{equation}
 \label{eqn:3}
@@ -95,18 +95,18 @@ stf(w,D) = \sum_{d \epsilon D} tf(w,d)
 \label{eqn:4}
 df(w,D) = |\{d \epsilon D: w \epsilon d \}|
 \end{equation}
-Sometimes, word frequency might not give better feature sets when used in the machine learning models. In that case, higher order n-grams are used. For bigrams (where n=2), items will be two consecutive words. For trigrams (where n=3), items will be three consecutive words. But, higher the order, will result in over-fitting the model. And when document is large , the word vocabulary will be huge, so only top $k$ most valuable words will be selected.
+Sometimes, word frequency might not give better feature sets when used in the machine learning models. In that case, higher order n-grams are used. For bigrams (where n=2), items will be two consecutive words. For trigrams (where n=3), items will be three consecutive words. But, higher the order will result in over-fitting the model. And when the document is large, the word vocabulary will be huge, so only top $k$ most valuable words will be selected.
 
 \underline{conclude maddu, by comparing the literature survey of unigram and bigram n trigram, tell did we use ngram}
 
 \paragraph{Count vectorizer}
-Count vector is a type of word embedding based on frequency, while Word embedding format usually attempts to map a word to a vector using a dictionary. Here, dictionary is the list of all unique words in a document. One simple way is, a vector representation of a word is a one-hot encoded vector where 1 stands for the position where the word exists and 0 everywhere else. In count vectorizer, The one-hot encoding is replaced by  frequency of words. Now, in the matrix M where rows are the documents and columns are the word dictionary, the column can be understood as word vector for the corresponding word. There is a quite a few variations while preparing the above matrix M. The variations will be generally in the way dictionary is prepared.
+Count vector is a type of word embedding based on frequency, while Word embedding format usually attempts to map a word to a vector using a dictionary. Here, the dictionary is the list of all unique words in a document. One simple way is, a vector representation of a word is a one-hot encoded vector where 1 stands for the position where the word exists and 0 everywhere else. In count vectorizer, The one-hot encoding is replaced by the frequency of words. Now, in the matrix M where rows are the documents and columns are the word dictionary, the column can be understood as word vector for the corresponding word. There are a quite a few variations while preparing the above matrix M. The variations will be generally in the way the dictionary is prepared.
 Because in real world applications we might have a corpus which contains millions of documents. And with millions of document, we can extract hundreds of millions of unique words. So basically, the matrix that will be sparse one and inefficient for any computation. So an alternative to using every unique word as a dictionary element would be to pick say top 10,000 words based on frequency and then prepare a dictionary. Another variation is the way count is taken for each word. Either take the frequency (number of times a word has appeared in the document) or the presence(has the word appeared in the document?) to be the entry in the count matrix M. But generally, frequency method is preferred over the latter.
 
 Consider a Corpus $C$ consisting $D$ documents {d1,d2…..dD} and $N$ unique tokens extracted out of the corpus $C$. The $N$ tokens will form our dictionary and the size of the Count Vector matrix $M$ will be given by $D X N$. Each row in the matrix $M$ contains the frequency of tokens in document $D(i)$.
 
 \paragraph{tf-idf}
-The Term Frequency-Inverse Document Frequency, tf-idf is another way of converting textual data to numeric form. The resulting vector value is the product of the two terms TF and IDF. Term frequency $tf$ is given in the equation (\ref{eqn:1}). So, now the inverse document frequency $idf$, which measures how important a word is to differentiate each document is calculated by using the equation in (\ref{eqn:5}). By replacing the terms from (\ref{eqn:4}), we get equation(\ref{eqn:6}). tf-idf is a dot product of the $tf$ and the $idf$ which is given in the equation (\ref{eqn:7})
+The Term Frequency-Inverse Document Frequency, tf-idf is another way of converting textual data to the numeric form. The resulting vector value is the product of the two terms TF and IDF. Term frequency $tf$ is given in the equation (\ref{eqn:1}). So, now the inverse document frequency $idf$, which measures how important a word is to differentiate each document is calculated by using the equation in (\ref{eqn:5}). By replacing the terms from (\ref{eqn:4}), we get equation(\ref{eqn:6}). tf-idf is a dot product of the $tf$ and the $idf$ which is given in the equation (\ref{eqn:7})
 
 \begin{equation}
 \label{eqn:5}
@@ -124,20 +124,20 @@ tf\-idf(w,d,D) = tf(w,d) . idf(w,D)
 
 \underline{write about  did we use tfidf or not}
 
-Now that we discussed about the process of converting the text as feature, which can be used as a input to machine learning models. The accuracy of these models can be improved adding extra useful features to the input variables. This is discussed in the next section.
+Now that we discussed the process of converting the text as the feature, which can be used as an input to machine learning models. The accuracy of these models can be improved by adding extra useful features to the input variables. This is discussed in the next section.
 
 
-\subsubsection{Heterogenous Feature Selection}
-The author of the paper \cite{Domingos:2012} quotes, ``At the end of the day, some machine learning projects succeed and some fail. What makes the difference? Easily the most important factor is the features used…This is typically where most of the effort in a machine learning project goes. ".  Lets say, while building a binary sentiment tweet classifier model, the feature are extracted from the text using the n-gram approach. Here, the count of misspelled words or count of emoticons used in the tweet can be added as an extra feature. This will help in increasing the accuracy of the machine learning model. \cite{Cortis} adds an extra feature which is the presence of bullying terms, to the feature extracted from the text as the input to the model built for detecting the cyber bullying tweets. The pipeline module of scikit-learn \cite{scikit-learn} \footnote{https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html} allows to combine features and labels together in such a way that you can use them as a single unit. In this research, apart from extracting the feature from the text, additional feature like the presence of the "migration" related terms is added to the feature set for training the classifier model. 
+\subsubsection{Heterogeneous Feature Selection}
+The author of the paper \cite{Domingos:2012} quotes, ``At the end of the day, some machine learning projects succeed and some fail. What makes the difference? Easily the most important factor is the features used…This is typically where most of the effort in a machine learning project goes. ".  Let's say, while building a binary Twitter sentiment classifier model, the feature is extracted from the text using the n-gram approach. Here, the count of misspelled words or count of emoticons used in the tweet can be added as an extra feature. This will help in increasing the accuracy of the machine learning model. \cite{Cortis} adds an extra feature which is the presence of bullying terms, to the feature extracted from the text as the input to the model built for detecting the cyber-bullying tweets. The pipeline module of scikit-learn \cite{scikit-learn} \footnote{https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html} allows combining features and labels together in such a way that you can use them as a single unit. In this research,  apart from extracting the feature from the text, additional feature like the presence of the "migration" related terms are added to the feature set for training the classifier model. 
 \subsection{Classification}
-Classification is generally known as, segregating and assigning the given objects to a pre-specified groups. and each group determines certain properties which explains about the object that are assigned to the respective groups. Accordingly in this research, I try to classify the text into classes. However, the task of classifying objects can be done in three ways:  manual classification, hard-code rules(using the regular expression), or machine learning based approach. The manual classification is expensive and tiresome work, for instance reading the entire book while classifying to which subject the book belongs to in a library. Writing hard-code rules to classify is difficult, for instance writing a very regular expression which will take care of all rules of grammar to search for a specific substring. So the third approach which is a machine learning approach, also called as statistical classification approach is used in this research. In last decades, in the feild of machine learning , the classification algorithms has been extensively studied and researched. There are many programming languages which give pre-built library for such algorithms such as sklearn \cite{scikit-learn} in python and  CRAN package in R. One important step in machine learning classification is annotations of the data(which is discussed in the next step). However now, we discuss the classification algorithms such as the logistic regression, naive Bayes, DecisionTree which are used in this experiment.
+Classification is generally known as, segregating and assigning the given objects to a pre-specified group. and each group determines certain properties which explain about the object that is assigned to the respective groups. Accordingly, in this research, I try to classify the text into classes. However, the task of classifying objects can be done in three ways:  manual classification, hard-code rules(using the regular expression), or machine learning based approach. The manual classification is expensive and tiresome work, for instance reading the entire book while classifying to which subject the book belongs to in a library. Writing hard-code rules to classify is difficult, for instance writing a very regular expression which will take care of all rules of grammar to search for a specific substring. So the third approach which is a machine learning approach, also called a statistical classification approach is used in this research. In the last decade, in the feild of machine learning, the classification algorithms have been extensively studied and researched. There are many programming languages which give pre-built library for such algorithms such as sklearn \cite{scikit-learn} in python and  CRAN package in R. One important step in machine learning classification is annotations of the data(which is discussed in the next step). However now, we discuss the classification algorithms such as the logistic regression, naive Bayes, DecisionTree which are used in this experiment.
 
 \subsubsection{Naive Bayes}
 
-\cite{Manning:2008} explains about the two types of naive Bayes(NB) models, which are multinomialNB and BernoulliNB. The difference between these two is that the multinomial model generates one term from the vocabulary in each document's position, whereas the Bernoulli model generates an indicator for each vocabulary term, either 1 indicating the presence of the term in the document or 0 indicating the absence. Which Matches  our unigram approach, which is mentioned in the subsection above. The reason why multinomialNB is used in this reaserch is this model takes into account of multiple occurrences of the terms where as BernoulliNB will not consider the mutiple occurances of the terms. The fundamental principle of both the models are similar, and is described below.
+\cite{Manning:2008} explains about the two types of naive Bayes(NB) models, which are multinomialNB and BernoulliNB. The difference between these two is that the multinomial model generates one term from the vocabulary in each document's position, whereas the Bernoulli model generates an indicator for each vocabulary term, either 1 indicating the presence of the term in the document or 0 indicating the absence. Which Matches  our unigram approach, which is mentioned in the subsection above. The reason why multinomialNB is used in this research is, this model takes into account multiple occurrences of the terms whereas BernoulliNB will not consider the multiple occurrences of the terms. The fundamental principle of both the models are similar and is described below.
 
-Formula for Bayes theorem in plan english is given in the equation (\ref{eqn:8}). Mathematical form is given in the equation (\ref{eqn:9}). In this formula, $C$ is the class and $F$ is the feature. $P(C|F)$ is conditional probability of $C$ given $F$. Bayes classifiers assume that, given the class variable, the value of a particular feature is independent of the value of any other feature. The Naive Bayes formula is given in the equation (\ref{eqn:10}) where $MAP$ is ``Maximum A
-Posterior". After substituting the right hand value and dropping the denominator from eqaution(\ref{eqn:9})( $P(F)$ is a constant, as it does not depend on classes $C$)  . 
+The formula for Bayes theorem in plain English is given in the equation (\ref{eqn:8}). The Mathematical form is given in the equation (\ref{eqn:9}). In this formula, $C$ is the class and $F$ is the feature. $P(C|F)$ is conditional probability of $C$ given $F$. Bayes classifiers assume that, given the class variable, the value of a particular feature is independent of the value of any other feature. The Naive Bayes formula is given in the equation (\ref{eqn:10}) where $MAP$ is ``Maximum A
+Posterior". After substituting the right-hand value and dropping the denominator from equation(\ref{eqn:9})( $P(F)$ is a constant, as it does not depend on classes $C$). 
 
 
 
@@ -161,15 +161,15 @@ C_{MAP} = argmax_{c\epsilon C} P(C) P(F|C)
 \end{equation}
 
 
-Advantages of Naive Bayes is, it is Super simple, If the NB conditional independence assumption actually holds, a Naive Bayes classifier will run quicker than discriminative models like logistic regression, so less training data required. And even if the NB assumption doesn’t hold, a NB classifier still often does a great job in practice.
+Advantages of Naive Bayes is, it is Super simple, If the NB conditional independence assumption actually holds, a Naive Bayes classifier will run quicker than discriminative models like logistic regression, so less training data required. And even if the NB assumption doesn’t hold, an NB classifier still often does a great job in practice.
 
 \underline{literature yaar uaar nb use madiradu bari} 
 
 \subsubsection{Logistic Regression}
 
-\cite{ManDaniel} Discusses the advantages of Logistic regression in text classifications. Logistic regression is also referred as maximum entropy model within language processing. Unlike naive Bayes classifier which is generative classifier, the Logistic regression is a discriminative classifier.A discriminative model takes this direct approach of calculating $P(C|F)$ (equation \ref{eqn:10}) by distinguishing between the different possible values of class $C$ instead of first calculating a likelihood. Logistic regression estimates $P(C|F)$ by extracting certain features from the input, combining them linearly and then applying a function to this combination. Logistic regression analysis is appropriate when the labels are binary, this was the reason logistic regression was used in this research, as I will be building a binary classifier. 
+\cite{ManDaniel} Discusses the advantages of Logistic regression in text classifications. Logistic regression is also referred to as maximum entropy model within language processing. Unlike naive Bayes classifier which is a generative classifier, the Logistic regression is a discriminative classifier. A discriminative model takes this direct approach of calculating $P(C|F)$ (equation \ref{eqn:10}) by distinguishing between the different possible values of class $C$ instead of first calculating a likelihood. Logistic regression estimates $P(C|F)$ by extracting certain features from the input, combining them linearly and then applying a function to this combination. Logistic regression analysis is appropriate when the labels are binary, this was the reason logistic regression was used in this research, as I will be building a binary classifier. 
 
-Logistic Regression uses Sigmoid function(logistic function) which takes any real value between zero and one. It is defined in the equation (\ref{eqn:12}). if $t= \beta_0 + \beta_1x$ is considered as linear function in a univariate regression model. Logistic Equation will become (\ref{eqn:13}). 
+Logistic Regression uses Sigmoid function(logistic function) which takes any real value between zero and one. It is defined in the equation (\ref{eqn:12}). if $t= \beta_0 + \beta_1x$ is considered a linear function in a univariate regression model. Logistic Equation will become (\ref{eqn:13}). 
 
 
 
@@ -185,12 +185,12 @@ p(x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1x)}}
 
 
 
-Advantages of Logistic Regression is Lots of ways to regularize the model, and you don’t have to worry as much about your features being correlated, like you do in Naive Bayes. You also have a nice probabilistic interpretation, unlike decision trees or SVMs, and you can easily update your model to take in new data (using an online gradient descent method), again unlike decision trees or SVMs. Use it if you want a probabilistic framework (e.g., to easily adjust classification thresholds, to say when you’re unsure, or to get confidence intervals) or if you expect to receive more training data in the future that you want to be able to quickly incorporate into your model.
+Advantages of Logistic Regression is Lots of ways to regularize the model, and you don’t have to worry as much about your features being correlated like you do in Naive Bayes. You also have a nice probabilistic interpretation, unlike decision trees or SVMs, and you can easily update your model to take in new data (using an online gradient descent method), again unlike decision trees or SVMs. Use it if you want a probabilistic framework (e.g., to easily adjust classification thresholds, to say when you’re unsure, or to get confidence intervals) or if you expect to receive more training data in the future that you want to be able to quickly incorporate into your model.
 
 \underline{bari guru - abt literature }
 
 \subsubsection{DecisionTree}
-A decision tree is a simple flowchart/tree that selects labels for input values. \cite{BirdKleinLoper09} discusses about the Decision trees classifier in text classification. The decision tree is a tree whose internal nodes are tests and whose leaf nodes are categories. An example decicion tree model is given in the fig \ref{fig:Decision_tree} . This tree is the model to classify the names into gender class. The tree consists of decision nodes, which check feature values, and leaf nodes, which assign labels. Using this decision tree, a new input value can be assigned to a label. But building the decision tree is not straightforward. The feature on which the decision tree to build or the decision stump is not defined. The simplest method to decide which feature to use first while building a tree is, just build a decision stump for each possible feature and check for the best accuracy on training data. Other method is to consider a feature which gives maximum information. There are many methods to calculate the maximum information, one such method is calculating the entropy of input feature of the particular labels. Based on the entropy calculated on the input variables, the decision stump is decided and the decision tree is built.
+A decision tree is a simple flowchart/tree that selects labels for input values. \cite{BirdKleinLoper09} discusses the Decision trees classifier in text classification. The decision tree is a tree whose internal nodes are tests and whose leaf nodes are categories. An example decision tree model is given in fig \ref{fig:Decision_tree}. This tree is the model to classify the names into gender class. The tree consists of decision nodes, which check feature values, and leaf nodes, which assign labels. Using this decision tree, a new input value can be assigned to a label. But building the decision tree is not straightforward. The feature on which the decision tree to build or the decision stump is not defined. The simplest method to decide which feature to use first while building a tree is, just build a decision stump for each possible feature and check for the best accuracy on training data. Another method is to consider a feature which gives maximum information. There are many methods to calculate the maximum information, one such method is calculating the entropy of input feature of the particular labels. Based on the entropy calculated on the input variables, the decision stump is decided and the decision tree is built.
 
 Decision trees have a number of advantages. one such is that, it is easy to interpret and understand. Another advantage is, it can predict both categorical and continuous label. \underline{bari guru - abt literature }
 
@@ -221,10 +221,10 @@ So, several different metrics exist for evaluating the performance of a classifi
 \begin{itemize}
  \item Confusion matrix
  
- A confusion matrix is a table used to describe the prediction results of a classifier. This table can be used to describe the performance of the classifier. For instance, For a binary classifier, the table has 2 rows and 2 columns. The columns represent observed labels and the rows represent the predicted labels, shown in the table \ref{tab:confusionmatrix}.
+ A confusion matrix is a table used to describe the prediction results of a classifier. This table can be used to describe the performance of the classifier. For instance, For a binary classifier, the table has 2 rows and 2 columns. The columns represent observed labels and the rows represent the predicted labels, shown in table \ref{tab:confusionmatrix}.
  
  \begin{itemize}
-     \item True Positve($TP$) : When the prediction is positive and it’s true.
+     \item True Positive($TP$) : When the prediction is positive and it’s true.
      \item False Positive($FP$) : When the prediction is positive and it’s false.
      \item False Negative($FN$) : When the prediction is negative and it’s false.
      \item True Negative($TN$) : When the prediction is negative and it’s true.
@@ -246,52 +246,52 @@ So, several different metrics exist for evaluating the performance of a classifi
  
     \item Precision
     
-    Precision is also called as positive predictive value, In binary classification, it is the number of positive prediction divided by the total number of predicted positive class values. Precision can be thought of as a measure of a classifiers exactness. It is defined in the equation \ref{eqn:Precision}. 
+    Precision is also called a positive predictive value, In binary classification, it is the number of positive prediction divided by the total number of predicted positive class values. Precision can be thought of as a measure of a classifiers exactness. It is defined in the equation \ref{eqn:Precision}. 
     
     \begin{equation}
     \label{eqn:Precision}
     Precision = \frac{TP}{TP + FP}
     \end{equation}
     
-    Where $TP$ is true positive and $FP$ is false positive.
+    Where $TP$ is true positive and $FP$ is a false positive.
     
     \item Recall
     
-    Recall is another performance metric in binary classification, is defined as, number of positive predictions divided by the number of positive class values in the test data. It can be thought of as a measure of a classifiers completeness. It is shown in the equation \ref{eqn:Recall} 
+    The Recall is another performance metric in binary classification, is defined as, the number of positive predictions divided by the number of positive class values in the test data. It can be thought of as a measure of a classifiers completeness. It is shown in equation \ref{eqn:Recall} 
     
     \begin{equation}
         \label{eqn:Recall}
     Recall = \frac{TP}{TP + FN}
     \end{equation}
     
-     Where $TP$ is true positive and $FN$ is false negative.
+     Where $TP$ is true positive and $FN$ is a false negative.
     
     \item F1-score
    
-    Which is also called as F-measure, this weights precision and recall evenly, and is give in the equation \ref{eqn:F1}.
+    Which is also called as F-measure, this weights precision and recall evenly, and is given in the equation \ref{eqn:F1}.
     
         \begin{equation}
         \label{eqn:F1}
     F1 = \frac{2 * recall * precision}{precision + recall}
     \end{equation}
-    In this research, F1 score is calculated to understand the performance of the model along with its accuracy.
+    In this research, the F1 score is calculated to understand the performance of the model along with its accuracy.
 \end{itemize}
 
 \subsection{Annotations}
 
-Annotations in machine learning is the process of labelling the data, which could be in forms like images, text, audio. For example, an image can be labeled as portrait or a landscape. The computers can learn to recognize patterns and classify new data to the corresponding labels using annotated data. Annotation is usually done manually by humans, moreover crowdsourcing can speed up the process and spread out the workload. An example of crowdsourcing is Amazon Mechanical Turk \footnote{https://www.mturk.com/}, which can be used for carry out annotations task. This technique of using crowdsourcing to annotate emotions in the tweets was used by \cite{Mohammad:2010:EEC:1860631.1860635}. But this crowdsourcing should be compensated for their task, due this reason in this research, I shared my dataset with my colleagues for annotation, who understood english language. The tweets were annotated by each annotator, and the mean those annotations were taken as the final label.  
+Annotation in machine learning is the process of labeling the data, which could be in forms like images, text, audio. For example, an image can be labeled as portrait or a landscape. The computers can learn to recognize patterns and classify new data to the corresponding labels using annotated data. Annotation is usually done manually by humans, moreover, crowdsourcing can speed up the process and spread out the workload. An example of crowdsourcing is Amazon Mechanical Turk \footnote{https://www.mturk.com/}, which can be used for carrying out annotations task. This technique of using crowdsourcing to annotate emotions in the tweets was used by \cite{Mohammad:2010:EEC:1860631.1860635}. But this crowdsourcing should be compensated for their task, due to this reason in this research, I shared my dataset with my colleagues for annotation, who understood English language. The tweets were annotated by each annotator, and the mean those annotations were taken as the final label.  
 
 \subsection{Tools}
-In order to realize this research, Python programming language and many other external tools and libraries are used. Python is an extremely powerful tool, also it is open source and flexible which adds to its popularity. It is known to have massive libraries for data manipulation and is extremely easy for all data analysts to learn and use. Some of the important libraries which is used in in this research are discussed in the following section.  
+In order to realize this research, Python programming language, and many other external tools and libraries are used. Python is an extremely powerful tool, also it is open source and flexible which adds to its popularity. It is known to have massive libraries for data manipulation and is extremely easy for all data analysts to learn and use. Some of the important libraries which are used in this research are discussed in the following section.  
 
 
 \begin{itemize}
     \item NLTK \\
-    NLTK(Natural Languge Toolkit) is one of the most important platform for building python programs to work with human langauge data. It has a comprehensive API documentation plus it provides libraries for classification, tokenization, stemming, word frequency. This library was used to geneate the word cloud using the word frequency. word cloud is an image composed of words used in a particular text, in which the size of each word indicates its frequency or importance.
+    NLTK(Natural Language Toolkit) is one of the most important platforms for building Python programs to work with human language data. It has comprehensive API documentation plus it provides libraries for classification, tokenization, stemming, word frequency. This library was used to generate the word cloud using the word frequency. The word cloud is an image composed of words used in a particular text, in which the size of each word indicates its frequency or importance.
     
   
     \item Scikit-learn: \\
-    It  \cite{scikit-learn} is a free software machine learning library for python programming language. It is a tool for data pre-processing and data analysis, and offers many machine algorithms as well. The Scikit-learn project aims to provide state-of-the-art implementations for a wide range of machine learning methods, it has a clean API that is robust, fast, easy to use, comprehensive and well documented. The Document is provides more detailed information to the experienced data analyst, while at the same time simple, key points of a topic to the beginner. Some key elements of the framework are illustrated below.
+    It  \cite{scikit-learn} is a free software machine learning library for python programming language. It is a tool for data pre-processing and data analysis, and offers many machine algorithms as well. The Scikit-learn project aims to provide state-of-the-art implementations for a wide range of machine learning methods, it has a clean API that is robust, fast, easy to use, comprehensive and well documented. The Document provides more detailed information to the experienced data analyst, while at the same time simple, key points of a topic to the beginner. Some key elements of the framework are illustrated below.
     
     \begin{itemize}
         \item Countvectorizer
@@ -303,8 +303,8 @@ In order to realize this research, Python programming language and many other ex
  
     
     \item Pandas \\
-   Pandas \cite{pythonpandas} is a open source library for python programming language , which provide easy-to-use data structures and data analysis tools. The data can be presented in suitable way using its Series and DataFrame data structure.
-  There are several methods in this package for convenient data filtering. Pandas have a variety of tools for seamlessly performing input and output operations. Data can be read from different formats such as CSV(comma seperated values), TSV(tab seperated values), MS Excel, etc.
+   Pandas \cite{pythonpandas} is an open source library for the Python programming language , which provide easy-to-use data structures and data analysis tools. The data can be presented in a suitable way using its Series and DataFrame data structure.
+  There are several methods in this package for convenient data filtering. Pandas have a variety of tools for seamlessly performing input and output operations. Data can be read from different formats such as CSV(comma separated values), TSV(tab separated values), MS Excel, etc.
 
 
 
@@ -319,9 +319,9 @@ In order to realize this research, Python programming language and many other ex
 
 \cite{Goergen} paper concentrates on event detection, which is mainly focused on 3 distinct parameters
 known as w3 questions, "What is really happening, Where is the incident and When did the
-event happen?". The authors collects the spatial-temporal data from Twitter from two different
-countries. They use Names entity recognition, Geo-coordinates to identify location. Using this
-data authors determine the "number of possible users for a shared account by calculating the
+event happen?". The authors collect the spatial-temporal data from Twitter from two different
+countries. They use Names entity recognition, Geo-coordinates to identify the location. Using these
+data, authors determine the "number of possible users for a shared account by calculating the
 distance and velocity between tweets belonging to single account".
 
  
@@ -333,7 +333,7 @@ likely determine the location of refugees". The technique used by authors to col
 downloaded all the Twitter data in a specific time frame and apply filters to separate out tweets
 which were of geographic interest. Authors collect both tweets which were geotagged with coordinates
 and with geotagged with a place description. For the latter type, The twitter places were
-are extended over continents. In addition to above filtering method, the authors also filter tweets
+are extended over continents. In addition to the above filtering method, the authors also filter tweets
 of interest based on hashtag search. \cite{Hübl} work inspired me on how to collect word list for filtering
 tweets related to migration. But this work was related to the refugee crisis.
  
@@ -342,7 +342,7 @@ along with popular terms used in those tweets. \cite{Cortis} tries to analyze cy
 world events. The authors choose two world events which were the cause of several cyberbullying.
 The technique used by authors to collect and filter Twitter data is that they select two real-world
 events trending hashtags along with popular cyberbullying terms. This technique inspired me to
-apply this filter logic to collect tweets regarding migration.
+apply this filtering logic to collect tweets regarding migration.
 Regarding Sentiment analysis there are two approaches, One approach is to use the labeled
 texts and use supervised machine learning trained on the labeled text data to classify the polarity
 of new texts. Another approach creates a sentiment lexicon and scores the text based on some
