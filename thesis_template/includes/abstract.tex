@@ -1,17 +1,10 @@
 % !TeX spellcheck = en_US
 % !TeX encoding = UTF-8
 \chapter*{Abstract}
-Social media generates a massive amount of data every minute, Which has helped and created
-many business opportunities. These data can be mined to find valuable patterns. Data regarding
-human mobility or migration flow can be used for many applications such as urban planning
-or understanding disease spreading or even population prediction. But, data collection method
-is outdated as data scientist use census data for identifying the patterns in inflow and outflow
-of humans, a lot of data and prediction is lost between census. Recent studies have shown that
-these trends or patterns can be studied using tracking mobile phones signals, GPS, WIFI or even
-with RFID devices. But, with these techniques, there will be privacy concerns and data access
-restriction. 
-\\
-Social media platform can be used to collect data. This paper proposes and explains the approach on how Twitter data can be used to get useful information. In particular, the data mined on Twitter can be used to understand many aspects of Human Migration. In this paper, I will try to propose a technique on how to extract these Spatial-Temporal data to understand people migration. And with help of text from the tweet, detect the sentiment of the people who tweet regarding migration.
-\\
-\\
-\underline{matte heavy agi bari}
+The objective of this thesis is to initially classify the tweets as human migration tweet or not. And then detect the sentiment of the classified migration tweet.  People use the tweets, which are a short message to express their opinion on the topic they are interested in. Which makes, interesting and challenging to classify these tweets to specific classes. Migration classifier classifies tweets into "migrations" or "not migrations" classes and sentiment classifier classifies the sentiment of the tweet into "positive" or "negative" classes. The binary classifier is built using a supervised machine learning algorithm.
+
+Set of supervised classifier algorithm consisting of logistic regression, naive Bayes, decision trees are used to create the classification model.  However, the data required to create these classifiers should be preprocessed and features extracted. The count vector and the presence of migration terms are used as the feature vector for the migration detection model, while only the count vector is used as the feature vector for the sentiment detection model. The performance of the learned classifier model is then calculated using the test data.
+
+The dataset for the migration detection model is self-built by searching the data archive using hashtags and manually annotating the labels.  An annotated dataset with the positive and negative labels is used for sentiment analysis. Accuracy and the F1-score of both the models were pretty good, however, when the migration tweets from the migration detection model are sent to sentiment detection model, the prediction was approximately 55\% accurate.
+
+\textit{Keywords: Data analysis, text mining, classification, sentiment analysis, twitter}

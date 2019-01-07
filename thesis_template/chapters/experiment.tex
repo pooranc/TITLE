@@ -238,7 +238,8 @@ Decision Trees     & 73.93             &  0.74              &  0.74           & 
 
 
 
-\section{Sentiment detection of migration classified tweets - experiment}
+\section{Sentiment detection of migration classified tweets - experiment} \label{ssssenti}
+
 
 This is the important step in this research, in this step tweets classified as migration tweets from the migration detection model are passed to the sentiment detection model.
 
@@ -300,8 +301,8 @@ A python script reads the output of the migration detection model and filters on
 \begin{tabular}{lllll}
 \cline{1-3}
 \multicolumn{1}{|l|}{}   & \multicolumn{1}{l|}{predicted\_POS} & \multicolumn{1}{l|}{predicted\_NEG}  &  &  \\ \cline{1-3}
-\multicolumn{1}{|l|}{POS} & \multicolumn{1}{l|}{6624}  & \multicolumn{1}{l|}{1294} &  &  \\ \cline{1-3}
-\multicolumn{1}{|l|}{NEG}   & \multicolumn{1}{l|}{1443}  & \multicolumn{1}{l|}{6599}  &  &  \\ \cline{1-3}
+\multicolumn{1}{|l|}{POS} & \multicolumn{1}{l|}{135}  & \multicolumn{1}{l|}{94} &  &  \\ \cline{1-3}
+\multicolumn{1}{|l|}{NEG}   & \multicolumn{1}{l|}{116}  & \multicolumn{1}{l|}{104}  &  &  \\ \cline{1-3}
                             &                           &                           &  & 
 \end{tabular}
 \caption{Decision trees: Confusion matrix}
@@ -325,4 +326,4 @@ Decision trees & 53.23             & 0.53              & 0.53          & 0.53   
 \label{tab:sentiment_of_Migration_metric}
 \end{table}
 
- 
+  The data-set is almost balanced with positive classes just edging over negative class \ref{fig:sent_migration_distribution}. Accuracy and the F1-scores of all the three classifier is bad, as the sentiment model is predicting on unknown data, which is shown in the table \ref{tab:sentiment_of_Migration_metric}. 

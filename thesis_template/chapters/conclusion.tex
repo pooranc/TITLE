@@ -1,6 +1,6 @@
 \chapter{Conclusion}\label{chap:conclusion}
 
-The conclusion of this research and the answers to the research questions are discussed in this section, in addition to suggested future work.
+The conclusion of this research and the answers to the research questions are discussed in this section, in addition, the suggested future work.
 
 \section{Research Questions}
 
@@ -8,36 +8,36 @@ The conclusion of this research and the answers to the research questions are di
 \begin{itemize}
     \item \textit{SQ1: What are the factors which result in human migration?}
     
-    We learn from the literature survey about all the factors that influence human migration. \cite{Christina_Hughes_et_al.} describes traditional and new ways of collecting migration data, but the author also mentions that it is difficult to collect unbiased data for all factors. Because, people migrating for employment purpose and people migrating for refugee crisis is not available in single format. For this reason, only political factors for extracting data were assumed in this research. The extraction of data method is inspired by \cite{Cortis}, a list of hashtags relating to political factors chosen for data extraction. These data which was collected on the basis of single migration factor, used for training migration detection classifier, the accuracy and the F1-score were pretty good which is shown in the table \ref{tab:Migration_metric}. However, the accuracy and the F1 score is reduced when generic migration data is used for the training classifier, which is shown the table \ref{tab:sentiment_metric_com}.
+    We learn from the literature survey about all the factors that influence human migration. \cite{Christina_Hughes_et_al.} describes traditional and new ways of collecting migration data, but the author also mentions that it is difficult to collect unbiased data for all factors. Because people migrating for employment purpose and people migrating for refugee crisis is not available in the single format. For this reason, only political factors for extracting data were assumed in this research. The extraction of data method is inspired by \cite{Cortis}, a list of hashtags relating to political factors chosen for data extraction. These data which was collected on the basis of a single migration factor, used for training migration detection classifier, the accuracy, and the F1-score were pretty good which is shown in the table \ref{tab:Migration_metric}. However, the accuracy and the F1 score is reduced when generic migration data is used for the training classifier, which is shown the table \ref{tab:sentiment_metric_com}.
     
     \item \textit{SQ2: Does additional feature computed from the tweets message increases the classification accuracy?}
     
   
     
-    From the literature survey, in section \ref{hetero}, we learn that adding a few more features helps to increase the classifier's performance. Migration index and the migration percentage are the other two features which were computed in feature engineering. These features are computed by checking the presence of the dictionary of migration terms which were created. This dictionary is created by checking the word Additional feature along with the feature vector generated on text of the tweet, helps to improve the performance of the classifier. This is witnessed by checking the performance of metric in the table \ref{tab:Migration_metric}
-
-\end{itemize}
-
-
-\begin{itemize}
-
+    From the literature survey, in section \ref{hetero}, we learn that adding a few more features helps to increase the classifier's performance. Migration index and the migration percentage are the other two features which were computed in feature engineering. Additional feature along with the feature vector generated on the text of the tweet helps to improve the performance of the classifier. This is witnessed by checking the performance of the metric in the table \ref{tab:Migration_metric}
+    
     \item  \textit{RQ1: How can Twitter messages be classified as human migration tweets?}
     
-    This is one of the primary goals of the thesis, which is the classify a tweet is related to migration or not. This follows up series of sub-question(SQ),
+    Based on the solutions of \textit{SQ1} and \textit{SQ2}, it can be concluded that, when the data is collected from a single migrating factor and the additional feature added to the feature vector, can help in improving the performance of the model.   
     
-    \begin{enumerate}
-        \item \textit{SQ1: What are the factors which result in human migration?}
-        
-        There are many reasons why people migrate to different countries, such as short-term migration for education or long-term migration due to war in the parent country. This is important because data is collected using single migration factors. 
-        \item \textit{SQ2: Does additional feature computed from the tweets message increases the classification accuracy ?}
-        Typically, there is no superior algorithm that works well for all data sets. The algorithm performance is data specific. 
-        
-    \end{enumerate}
-    
-    
-  
-    
-    \item \textit{RQ2: How can migration tweets classified with respect to sentiment?}
-    
-    Migration data can be used for many application, in my research, The opinion of the migration tweets is classified to positive or negative class.
+     \item \textit{RQ2: How can migration tweets classified with respect to sentiment?}
+     
+Once the tweets are classified as migration tweets from the migration detection model, the classified tweets are passed to the sentiment detection model. This is discussed in section \ref{ssssenti}. Although the performance of this model is less compared to the performance of the sentiment detection model, which can be derived from the table [\ref{tab:sentiment_of_Migration_metric}, \ref{tab:sentiment_metric}], the sentiment model is trying to predict the unseen data.  
+
 \end{itemize}
+
+\section{Conclusion}
+
+At the beginning of the project, a lot of literature surveys were conducted to understand how migration data can be collected from online sources and how migration tweets can be detected or Twitter user detected as a migrant. This research helped me to identify the research questions, which is detecting the sentiment of migration tweets. Now, the questions of research are set, we started the data collection process. But, how much is the sufficient data? The tweets are only 140 character messages with lots of noisy information such as acronyms and urls. Therefore, data collection step took lot of time. 
+
+Furthermore, The collected data from the twitter is unstructured. So, preprocessing of the data is performed to remove the unwanted and repeated tweets. Then the feature vectors are calculated. This is another important step. We wanted to improve the accuracy of the classifier by adding extra features.
+
+A set of experiments was then conducted. First, the detection of migration tweets, second, the detection of feelings.  Then, migration tweets from the first model are passed to sentiment detection model.
+
+\section{Future work}
+
+While doing my thesis, I restricted the migration data collection on a single factors, which is political factors of migration. For new work this can be extended other factors like social, economical and environmental. It would be interesting to classify the tweets among these different factors. 
+
+The number of samples collected in this research was relatively smaller, it would be interesting to collect more samples using more data archives, as more information is obtained from the text and classifier performance tested with more samples.
+
+In this research, only supervised machine learning algorithms were used, unsupervised learning models or ensemble models could be trained and comparing the results would be interesting.
