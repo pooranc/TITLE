@@ -1,5 +1,5 @@
 \chapter{Background}\label{chap:background}
-This chapter displays the background of the investigation, to enable a better comprehension of the framework executed. It starts with an introduction to the task of Detecting the sentiment of tweets related to human migration, followed by Text mining, Details of Twitter's data representation and its API's, classification algorithms. followed by the architectures that take advantage of the data’s spatial and temporal properties. The accompanying segment focuses on the past work that has been done in the field of mining Twitter's information and its analysis.
+This chapter displays the background of the investigation, to enable a better comprehension of the framework executed. It starts with an introduction to the Twitter API's, and data structure used by Twitter, followed by Text mining, classification algorithms, metrics to measure classification algorithms. The accompanying segment focuses on the past work that has been done in the field of mining Twitter's information and its analysis.
 
 machine learning pipeline, data crawling, and stuff
     
@@ -11,20 +11,23 @@ The core task of detecting the Sentiment of the Tweets which are related to ``Hu
 
 Twitter is one of the well known online social networks, People use this to communicate short messages (140 character length) called tweets and express opinion on various topics that they are interested in. It is also called ``Microblogging", which is different from other social media platform like Facebook. One more thing which makes Twitter different from Facebook is, Networking is not bidirectional. Which means connections don't have to be mutual. Another  potential aspect of choosing Twitter for mining data is, It popularized the term hashtags. Which is used to group a  conversation and user can follow a particular topic.
 
-Twitter provides a number of APIs to collect Twitter data programmatically. \cite{TwitterDevDocs} Gives a complete list of all Twitter APIs and the steps to set up the project to access Twitter data. Data from these APIs can be collected by more than one way, which can be broadly categorized as REST APIs and Streaming APIs . But, Twitter API limits access to applications. The rate limits are described in link  \footnote{https://developer.twitter.com/en/docs/basics/rate-limiting}. Usually, the REST APIs are used to search for the existing tweets or tweets which are already published. These APIs are not only rate limited also they are limited based on the time span (search tweets back to one week). Then, the streaming APIs can be used to collect tweets as per our search criteria and as they publish in current time(example: live events). These APIs are rate limited on a per-user basis. Based on the above two limitations, I choose to use the Twitter data archives \footnote{https://archive.org/details/twitterstream?and[]=year\%3A\%222016\%22}. This gave me an advantage of choosing a data dump which is based on a particular time.   
+Twitter provides a number of APIs to collect Twitter data programmatically. \cite{TwitterDevDocs} Gives a complete list of all Twitter APIs and the steps to set up the project to access Twitter data. Data from these APIs can be collected by more than one way, which can be broadly categorized as REST APIs and Streaming APIs . But, Twitter API limits access to applications. The rate limits are described in link  \footnote{https://developer.twitter.com/en/docs/basics/rate-limiting}. Usually, the REST APIs are used to search for the existing tweets or tweets which are already published. These APIs are not only rate limited also they are limited based on the time span (search tweets back to one week). Then, the streaming APIs can be used to collect tweets as per our search criteria and as they publish in current time(example: live events). These APIs are rate limited on a per-user basis. Based on the two limitations mentioned above, we choose to use the Twitter data archive \footnote{https://archive.org/details/twitterstream?and[]=year\%3A\%222016\%22}. This has given me the advantage of selecting archives based on a certain time frame.
 
 
 
 \cite{Marco} Gives in-detail about how the data in Twitter are represented
-and how the data can be extracted. Twitter contains Hashtags, Topics and Time Series along with
+and how the data can be extracted. Sample structure of the tweet JSON(JavaScript object notation) is shown in the figure \ref{fig:Tweet_json}. Twitter contains Hashtags, Topics and Time Series along with
 Users, Followers, and Communities. And  \cite{Marco} also explains how to filter hashtags, represent the
 tweets in graphs. Tweets are spatial-temporal data as these contain Geo-tag along with Created
 Time metadata.
 
-\underline{matte heavy agi bari}
-1) twitter data sets bagge bari
-2) Twitter api bagge bari
-3) data mining with tweets bagge bari
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\linewidth]{thesis_template/images/tweet_json.png}
+	\caption{Sample JSON of the tweet.}
+	\label{fig:Tweet_json}
+	
+\end{figure}
 
 
  But, building a successful system to detect Human migration Tweets and predicting the opinion of these Tweets requires selecting relevant features and a suitable machine learning model. With respect to Twitter data, These are obtained as JSON format. Each object contains metadata like Hashtags, Topics, Time series, Geo-tags along with these Users, Followers, and Communities. The ``Text" metadata in the Tweet is noisy as it is only 140 characters long(recently increased to 280 characters) and people would shorten the words in an unexpected manner. Traditionally while building a machine learning model "Text" metadata has used a feature. As it has many other particular features like Mentions(@user) and Hashtags(\# topic) which provide useful information.
@@ -127,7 +130,7 @@ tf\-idf(w,d,D) = tf(w,d) . idf(w,D)
 Now that we discussed the process of converting the text as the feature, which can be used as an input to machine learning models. The accuracy of these models can be improved by adding extra useful features to the input variables. This is discussed in the next section.
 
 
-\subsubsection{Heterogeneous Feature Selection}
+\subsubsection{Heterogeneous Feature Selection} \label{hetero}
 The author of the paper \cite{Domingos:2012} quotes, ``At the end of the day, some machine learning projects succeed and some fail. What makes the difference? Easily the most important factor is the features used…This is typically where most of the effort in a machine learning project goes. ".  Let's say, while building a binary Twitter sentiment classifier model, the feature is extracted from the text using the n-gram approach. Here, the count of misspelled words or count of emoticons used in the tweet can be added as an extra feature. This will help in increasing the accuracy of the machine learning model. \cite{Cortis} adds an extra feature which is the presence of bullying terms, to the feature extracted from the text as the input to the model built for detecting the cyber-bullying tweets. The pipeline module of scikit-learn \cite{scikit-learn} \footnote{https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html} allows combining features and labels together in such a way that you can use them as a single unit. In this research,  apart from extracting the feature from the text, additional feature like the presence of the "migration" related terms are added to the feature set for training the classifier model. 
 \subsection{Classification}
 Classification is generally known as, segregating and assigning the given objects to a pre-specified group. and each group determines certain properties which explain about the object that is assigned to the respective groups. Accordingly, in this research, I try to classify the text into classes. However, the task of classifying objects can be done in three ways:  manual classification, hard-code rules(using the regular expression), or machine learning based approach. The manual classification is expensive and tiresome work, for instance reading the entire book while classifying to which subject the book belongs to in a library. Writing hard-code rules to classify is difficult, for instance writing a very regular expression which will take care of all rules of grammar to search for a specific substring. So the third approach which is a machine learning approach, also called a statistical classification approach is used in this research. In the last decade, in the feild of machine learning, the classification algorithms have been extensively studied and researched. There are many programming languages which give pre-built library for such algorithms such as sklearn \cite{scikit-learn} in python and  CRAN package in R. One important step in machine learning classification is annotations of the data(which is discussed in the next step). However now, we discuss the classification algorithms such as the logistic regression, naive Bayes, DecisionTree which are used in this experiment.
@@ -314,21 +317,21 @@ In order to realize this research, Python programming language, and many other e
 
 \section{Related works in mining Twitter social media data}
 
+This section looks at the recent development in extracting migration information from textual data, data mining on Twitter data, feature engineering in text analysis and text classification algorithms.
 
+\subsection{Literature survey}
 
-
-\cite{Goergen} paper concentrates on event detection, which is mainly focused on 3 distinct parameters
+As a starting point, we began to examine how to detect the migration event, \cite{Goergen} paper concentrates on event detection, which is mainly focused on 3 distinct parameters
 known as w3 questions, "What is really happening, Where is the incident and When did the
 event happen?". The authors collect the spatial-temporal data from Twitter from two different
 countries. They use Names entity recognition, Geo-coordinates to identify the location. Using these
 data, authors determine the "number of possible users for a shared account by calculating the
-distance and velocity between tweets belonging to single account".
+distance and velocity between tweets belonging to single account". However, human migration is not triggered on certain incidents and we did not find the need to detect the migration event. 
 
- 
-Authors from \cite{Hadgu} and  \cite{Böhm2017} presents an approach to classify the Twitter user to a particular domain, for example, Researcher or Economist. Authors of \cite{Hadgu} presents a method to classify a twitter user to a specific researcher discipline. They use a seed set from the computer science conference and crawl Twitter to collect relatively good ground truth data. This mapping is used to learn a model for classifying the Twitter user to particular desired discipline. Authors of \cite{Böhm2017}  extends this approach to classify Economist in Twitter. Their approach differs from \cite{Hadgu}, as they use the "Text" of the tweets for classification. They collect ground truth data by comparing the Twitter user account name with the economic publication database. This data is used to train a classifier model. But, In my case, It is very difficult to get the ground truth data, There is limited data where the Twitter user can be verified to figure out the Tweet is coming from a migrant or Tweet "Text" is related to migration. 
+Later, we started examining how to detect the Twitter user is a migrant or not. Authors from \cite{Hadgu} and  \cite{Böhm2017} presents an approach to classify the Twitter user to a particular domain, for example, Researcher or Economist. Authors of \cite{Hadgu} presents a method to classify a twitter user to a specific researcher discipline. They use a seed set from the computer science conference and crawl Twitter to collect relatively good ground truth data. This mapping is used to learn a model for classifying the Twitter user to particular desired discipline. Authors of \cite{Böhm2017}  extends this approach to classify Economist in Twitter. Their approach differs from \cite{Hadgu}, as they use the "Text" of the tweets for classification. They collect ground truth data by comparing the Twitter user account name with the economic publication database. This data is used to train a classifier model. But, In this research, It is very difficult to get the ground truth data, there is limited data where the Twitter user can be verified to figure out the Tweet is coming from a migrant or Tweet "Text" is related to migration. 
  
 \cite{Hübl} paper concentrates on "Individual and aggregate trajectories that reflects the refugee migration
-movements" and "identify the spatiotemporal event clusters of refugee-related tweets to
+movements" and "identify the spatio-temporal event clusters of refugee-related tweets to
 likely determine the location of refugees". The technique used by authors to collect data is, they
 downloaded all the Twitter data in a specific time frame and apply filters to separate out tweets
 which were of geographic interest. Authors collect both tweets which were geotagged with coordinates
@@ -339,19 +342,18 @@ tweets related to migration. But this work was related to the refugee crisis.
  
 Compare to the data collection method used by \cite{Hübl}. The authors of \cite{Cortis} use hashtag filtering
 along with popular terms used in those tweets. \cite{Cortis} tries to analyze cyberbullying tweets in trending
-world events. The authors choose two world events which were the cause of several cyberbullying.
+world events. The authors choose two world events which were the cause of several cyberbullying instances.
 The technique used by authors to collect and filter Twitter data is that they select two real-world
 events trending hashtags along with popular cyberbullying terms. This technique inspired me to
 apply this filtering logic to collect tweets regarding migration.
-Regarding Sentiment analysis there are two approaches, One approach is to use the labeled
-texts and use supervised machine learning trained on the labeled text data to classify the polarity
-of new texts. Another approach creates a sentiment lexicon and scores the text based on some
-function that describes how the words and phrases of the text match the lexicon, \cite{DBLP} Evaluates
-word list sentiment analysis for microblogging.
+
+
+Regarding text classification there are two approaches, One approach is to use the labeled texts and use supervised machine learning algorithm is  trained on the labeled text data to classify the classes
+of new texts. Another approach creates a sentiment lexicon and scores the text based on some function that describes how the words and phrases of the text match the lexicon, \cite{DBLP} Evaluates word list sentiment analysis for microblogging.
 
  \cite{Jamie} Discusses how a classifier model is trained
 and evaluated by calculating precision, recall and F1 score on manually annotated and classifier
 predictions.
 
 
- \underline{matte heavy agi bari}
+

@@ -1,3 +1,43 @@
 \chapter{Conclusion}\label{chap:conclusion}
 
-Summarize the thesis and provide a outlook on future work.  
+The conclusion of this research and the answers to the research questions are discussed in this section, in addition to suggested future work.
+
+\section{Research Questions}
+
+
+\begin{itemize}
+    \item \textit{SQ1: What are the factors which result in human migration?}
+    
+    We learn from the literature survey about all the factors that influence human migration. \cite{Christina_Hughes_et_al.} describes traditional and new ways of collecting migration data, but the author also mentions that it is difficult to collect unbiased data for all factors. Because, people migrating for employment purpose and people migrating for refugee crisis is not available in single format. For this reason, only political factors for extracting data were assumed in this research. The extraction of data method is inspired by \cite{Cortis}, a list of hashtags relating to political factors chosen for data extraction. These data which was collected on the basis of single migration factor, used for training migration detection classifier, the accuracy and the F1-score were pretty good which is shown in the table \ref{tab:Migration_metric}. However, the accuracy and the F1 score is reduced when generic migration data is used for the training classifier, which is shown the table \ref{tab:sentiment_metric_com}.
+    
+    \item \textit{SQ2: Does additional feature computed from the tweets message increases the classification accuracy?}
+    
+  
+    
+    From the literature survey, in section \ref{hetero}, we learn that adding a few more features helps to increase the classifier's performance. Migration index and the migration percentage are the other two features which were computed in feature engineering. These features are computed by checking the presence of the dictionary of migration terms which were created. This dictionary is created by checking the word Additional feature along with the feature vector generated on text of the tweet, helps to improve the performance of the classifier. This is witnessed by checking the performance of metric in the table \ref{tab:Migration_metric}
+
+\end{itemize}
+
+
+\begin{itemize}
+
+    \item  \textit{RQ1: How can Twitter messages be classified as human migration tweets?}
+    
+    This is one of the primary goals of the thesis, which is the classify a tweet is related to migration or not. This follows up series of sub-question(SQ),
+    
+    \begin{enumerate}
+        \item \textit{SQ1: What are the factors which result in human migration?}
+        
+        There are many reasons why people migrate to different countries, such as short-term migration for education or long-term migration due to war in the parent country. This is important because data is collected using single migration factors. 
+        \item \textit{SQ2: Does additional feature computed from the tweets message increases the classification accuracy ?}
+        Typically, there is no superior algorithm that works well for all data sets. The algorithm performance is data specific. 
+        
+    \end{enumerate}
+    
+    
+  
+    
+    \item \textit{RQ2: How can migration tweets classified with respect to sentiment?}
+    
+    Migration data can be used for many application, in my research, The opinion of the migration tweets is classified to positive or negative class.
+\end{itemize}
